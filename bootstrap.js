@@ -2,7 +2,7 @@
 const {classes: Cc, interfaces: Ci, utils: Cu}=Components
 
 Cu.import("resource://gre/modules/Services.jsm")
-Cu.import("resource://gre/modules/AddonManager.jsm")
+Cu.import("resource:///modules/CustomizableUI.jsm");
 
 /* ******************************************* vars *********************************************** */
 
@@ -25,24 +25,18 @@ const reasons=["","APP_STARTUP","APP_SHUTDOWN","ADDON_ENABLE","ADDON_DISABLE","A
 /* ***************************************** main functions ************************************************* */
 
 function install(data,reason){ 
-  pref(prefs.installReason,reasons[reason])
-  if(reason==ADDON_INSTALL) pref(prefs.firstRun, true) 
 }
 
 function startup(data,reason){
-  pref(prefs.startupReason,reasons[reason])
-  AddonManager.getAddonByID(data.id, function(addon){
-    include(addon, "content/lib.js")
-    include(addon, "content/ui.js")
-    include(addon, "content/main.js")
-    
-    eachWindow(loadIntoWindow)                        //ui building function
-    Services.ww.registerNotification(windowWatcher)
-  })
+  include(data, "content/lib.js")
+  include(data, "content/ui.js")
+  include(data, "content/main.js")
+  
+  eachWindow(loadIntoWindow)
+  Services.ww.registerNotification(windowWatcher)
 }
 
 function shutdown(data,reason){
-  pref(prefs.shutdownReason,reasons[reason])
   if(reason==ADDON_DISABLE){
     Services.ww.unregisterNotification(windowWatcher)
     eachWindow(unloadFromWindow)                        //ui destroying function
@@ -51,8 +45,8 @@ function shutdown(data,reason){
 
 /* ****************************************** add functions ************************************************ */
 
-function include(addon, path){                          //load scripts
-  Services.scriptloader.loadSubScript(addon.getResourceURI(path).spec, self)
+function include(data, path){                          //load scripts
+  Services.scriptloader.loadSubScript(data.resourceURI.spec + path, self)
 }
 
 function pref(name,value){                            //get/set prefs

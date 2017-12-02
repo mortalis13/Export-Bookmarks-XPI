@@ -5,18 +5,25 @@ function addMenuItem(w) {
   var $=w.$
   $.init(w.document)
   
-  var exportMenuItem = $("<menuitem>");
-  if(exportMenuItem){
-    exportMenuItem.attr("id", menuProps.id);
-    exportMenuItem.attr("label",menuProps.label);
-    exportMenuItem.attr("accesskey", menuProps.accesskey);
-    exportMenuItem.bind("command", exportBookmarks);
-    var bookmarksMenuPopup=$("bookmarksMenuPopup")
-    if(bookmarksMenuPopup) bookmarksMenuPopup.insertBefore(exportMenuItem, $("bookmarksToolbarSeparator"));
+  var menuitem = $(menuProps.id);
+  menuitem && menuitem.remove();
+
+  var bookmarksMenuItem = $("<menuitem>");
+  if(bookmarksMenuItem){
+    bookmarksMenuItem.attr("id", menuProps.id);
+    bookmarksMenuItem.attr("label",menuProps.label);
+    bookmarksMenuItem.attr("accesskey", menuProps.accesskey);
+    bookmarksMenuItem.bind("command", exportBookmarks);
+    
+    var bookmarksMenuPopup=$("bookmarksMenuPopup");
+    var beforeItem = w.document.getElementById('bookmarksShowAll');
+    if(bookmarksMenuPopup) {
+      bookmarksMenuPopup.insertBefore(bookmarksMenuItem, beforeItem);
+    }
   }
 }
 
-function removeMenuItem(w){
+function removeMenuItem(w) {
   var $=w.$
   $.init(w.document)
   var menuitem=$(menuProps.id)

@@ -18,9 +18,9 @@ function unloadFromWindow(window){
 /* ***************************************** load functions ******************************************** */
 
 function eachWindow(callback){
-  var enumerator=Services.wm.getEnumerator("navigator:browser")
+  let enumerator=Services.wm.getEnumerator("navigator:browser")
   while (enumerator.hasMoreElements()){
-    var win=enumerator.getNext()
+    let win=enumerator.getNext()
     if (win.document.readyState==="complete") callback(win)
     else runOnLoad(win, callback)
   }

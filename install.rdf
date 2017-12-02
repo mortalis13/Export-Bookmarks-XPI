@@ -1,11 +1,13 @@
-<?xml version='1.0' encoding='utf-8'?>
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>export-bookmarks@toolbar.org</em:id>
     <em:name>Export Bookmarks</em:name>
-    <em:version>1.0.2</em:version>
+    <em:version>1.0.3</em:version>
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
+    <em:multiprocessCompatible>true</em:multiprocessCompatible>
   
     <em:description>Adds an Export Bookmarks menu item</em:description>
     <em:creator>mortalis</em:creator>
